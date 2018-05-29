@@ -5,6 +5,10 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.koscak.jan.ai.DefaultAI;
+import cz.koscak.jan.ai.Inteligence;
+import cz.koscak.jan.ai.model.AIScope;
+import cz.koscak.jan.ai.utils.AIActionPerformer;
 import cz.koscak.jan.model.Bullet;
 import cz.koscak.jan.model.Direction;
 import cz.koscak.jan.model.Fighter;
@@ -22,9 +26,12 @@ public class Game {
 
 	private void initGame() {
 		
+		AIActionPerformer aIActionPerformer = new AIActionPerformer(this);
+		
 		// Team BLUE
 		
-		Team teamBlue = new Team(Color.BLUE);
+		Inteligence inteligenceRed = new DefaultAI();
+		Team teamBlue = new Team(aIActionPerformer, Color.BLUE, inteligenceRed);
 		listOfTeams.add(teamBlue);
 		
 		Fighter fighterBlue1 = new Fighter(teamBlue, 100, 100);
@@ -44,7 +51,8 @@ public class Game {
 
 		// Team RED
 		
-		Team teamRed = new Team(Color.RED);
+		Inteligence inteligenceBlue = new DefaultAI();
+		Team teamRed = new Team(aIActionPerformer, Color.RED, inteligenceBlue);
 		listOfTeams.add(teamRed);
 		
 		Fighter fighterRed1 = new Fighter(teamRed, 200, 200);
@@ -62,8 +70,23 @@ public class Game {
 		Bullet bullet2 = fighterRed1.shoot(new Direction(-1, -1));
 		listOfBullets.add(bullet2);
 		
+		// Setting up scopes
+		
+		AIScope blueAIScope = new AIScope(0, teamBlue, teamRed);
+		AIScope redAIScope = new AIScope(1, teamRed, teamBlue);
+		teamBlue.setScope(blueAIScope);
+		teamRed.setScope(redAIScope);
+		
 	}
 	
+	public List<Team> getListOfTeams() {
+		return listOfTeams;
+	}
+
+	public List<Bullet> getListOfBullets() {
+		return listOfBullets;
+	}
+
 	public void paint(Graphics graphics) {
 
 		for (Team team : listOfTeams) {
@@ -76,7 +99,12 @@ public class Game {
 
 	}
 
-	public void doActions() {
+	public void doActions(int round) {
+		
+		for (Team team : listOfTeams) {
+			team.doAction(round);
+		}
+		
 		for (Bullet bullet : listOfBullets) {
 			bullet.move();
 		}

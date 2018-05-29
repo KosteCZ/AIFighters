@@ -15,16 +15,20 @@ public class Main {
 		//arenaFrame.paint(graphics);
 		//arenaFrame.repaint();
 
+		int round = 0;
+		
 		while(true) {
+			
+			round++;
 			
 			try {
 				//System.out.println("Timer tick...");
-				Thread.sleep(100);
+				Thread.sleep(50);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			game.doActions();
+			game.doActions(round);
 			arenaFrame.repaint();
 		}		
 

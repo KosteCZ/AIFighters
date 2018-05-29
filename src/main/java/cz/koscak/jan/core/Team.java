@@ -5,16 +5,24 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.koscak.jan.ai.Inteligence;
+import cz.koscak.jan.ai.model.AIScope;
+import cz.koscak.jan.ai.utils.AIActionPerformer;
 import cz.koscak.jan.model.Fighter;
 
 public class Team {
 	
 	private Color color;
+	private Inteligence inteligence;
 	private List<Fighter> listOfFighters = new ArrayList<Fighter>();
+	private AIScope aIScope;
+	private AIActionPerformer aIActionPerformer;
 	
-	public Team (Color color) {
+	public Team(AIActionPerformer aIActionPerformer, Color color, Inteligence inteligence) {
 		
 		this.color = color;
+		this.inteligence = inteligence;
+		this.aIActionPerformer = aIActionPerformer;
 				
 	}
 	
@@ -22,6 +30,10 @@ public class Team {
 		listOfFighters.add(fighter);
 	}
 	
+	public List<Fighter> getListOfFighters() {
+		return listOfFighters;
+	}
+
 	public void paint(Graphics graphics) {
 		
 		for (Fighter fighter : listOfFighters) {
@@ -33,6 +45,15 @@ public class Team {
 
 	public Color getColor() {
 		return color;
+	}
+
+	public void doAction(int round) {
+		inteligence.doAction(aIScope, round);
+		aIActionPerformer.doActions(aIScope);
+	}
+
+	public void setScope(AIScope aIScope) {
+		this.aIScope = aIScope;
 	}
 
 }
