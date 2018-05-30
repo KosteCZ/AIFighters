@@ -30,4 +30,24 @@ public class AIScope {
 		return enemyTeam;
 	}
 	
+	public int getAliveFightersCount() {
+		int count = 0;
+		for (AIFighter fighter : myTeam) {
+			if (fighter.isAlive()) {
+				count++;
+			}
+		}	
+		return count;
+	}
+	
+	public int getAliveEnemiesCount() {
+		int count = 0;
+		for (AIEnemy enemy : enemyTeam) {
+			if (enemy.isAlive()) {
+				count++;
+			}
+		}
+		return count;
+	}
+	
 }

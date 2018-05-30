@@ -18,22 +18,37 @@ public class AIActionPerformer {
 	
 	public void doActions(AIScope aIScope) {
 		
-		//TODO: Perform actions
+		// Perform actions
 		
 		for (AIFighter aIFighter : aIScope.getMyTeam()) {
 			
-			if (aIFighter.isMoving()) {
-				
-				//TODO
-				
-			}
+			Fighter fighter = findFighter(aIFighter);
 			
-			if (aIFighter.isShooting()) {
-				Fighter fighter = findFighter(aIFighter);
-				Direction direction = aIFighter.getShootingAction().getDirection();
-				Bullet bullet = fighter.shoot(direction);
-				game.getListOfBullets().add(bullet);
-				aIFighter.doNotShoot();
+			if (fighter.isAlive()) {
+			
+				if (aIFighter.isMoving()) {
+					
+					Direction direction = aIFighter.getMovingAction().getDirection();
+					
+					//TODO: Stopping (edges of arena, reaching desired destination)
+					
+					fighter.move(direction);
+					
+					boolean doOnlyOnce = aIFighter.getMovingAction().isDoOnlyOnce();
+					if (doOnlyOnce) {
+						aIFighter.doNotMove();
+					}
+				}
+				
+				if (aIFighter.isShooting()) {
+					
+					Direction direction = aIFighter.getShootingAction().getDirection();
+					Bullet bullet = fighter.shoot(direction);
+					game.getListOfBullets().add(bullet);
+					aIFighter.doNotShoot();
+					
+				}
+			
 			}
 			
 		}

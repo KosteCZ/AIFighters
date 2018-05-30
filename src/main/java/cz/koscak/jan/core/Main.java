@@ -24,12 +24,15 @@ public class Main {
 			try {
 				//System.out.println("Timer tick...");
 				Thread.sleep(50);
+				//Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			game.doActions(round);
 			arenaFrame.repaint();
+			
 		}		
 
 	}

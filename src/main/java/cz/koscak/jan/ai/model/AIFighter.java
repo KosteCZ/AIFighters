@@ -41,6 +41,10 @@ public class AIFighter {
 		this.movingAction = new MovingAction(direction, false);
 	}
 	
+	public void doNotMove() {
+		this.movingAction = null;
+	}
+	
 	public boolean isMoving() {
 		return (movingAction != null);
 	}

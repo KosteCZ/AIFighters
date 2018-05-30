@@ -5,8 +5,9 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.koscak.jan.ai.DefaultAI;
 import cz.koscak.jan.ai.Inteligence;
+import cz.koscak.jan.ai.RandomAI;
+import cz.koscak.jan.ai.StupidAI;
 import cz.koscak.jan.ai.model.AIScope;
 import cz.koscak.jan.ai.utils.AIActionPerformer;
 import cz.koscak.jan.model.Bullet;
@@ -30,8 +31,9 @@ public class Game {
 		
 		// Team BLUE
 		
-		Inteligence inteligenceRed = new DefaultAI();
-		Team teamBlue = new Team(aIActionPerformer, Color.BLUE, inteligenceRed);
+		//Inteligence inteligenceBlue = new DefaultAI();
+		Inteligence inteligenceBlue = new StupidAI();
+		Team teamBlue = new Team(aIActionPerformer, Color.BLUE, inteligenceBlue);
 		listOfTeams.add(teamBlue);
 		
 		Fighter fighterBlue1 = new Fighter(teamBlue, 100, 100);
@@ -51,15 +53,15 @@ public class Game {
 
 		// Team RED
 		
-		Inteligence inteligenceBlue = new DefaultAI();
-		Team teamRed = new Team(aIActionPerformer, Color.RED, inteligenceBlue);
+		Inteligence inteligenceRed = new RandomAI();
+		Team teamRed = new Team(aIActionPerformer, Color.RED, inteligenceRed);
 		listOfTeams.add(teamRed);
 		
-		Fighter fighterRed1 = new Fighter(teamRed, 200, 200);
-		Fighter fighterRed2 = new Fighter(teamRed, 190, 210);
-		Fighter fighterRed3 = new Fighter(teamRed, 180, 220);
-		Fighter fighterRed4 = new Fighter(teamRed, 210, 190);
-		Fighter fighterRed5 = new Fighter(teamRed, 220, 180);
+		Fighter fighterRed1 = new Fighter(teamRed, 500 - (Fighter.DIAMETER * 2), 500 - (Fighter.DIAMETER * 2));
+		Fighter fighterRed2 = new Fighter(teamRed, 490 - (Fighter.DIAMETER * 2), 510 - (Fighter.DIAMETER * 2));
+		Fighter fighterRed3 = new Fighter(teamRed, 480 - (Fighter.DIAMETER * 2), 520 - (Fighter.DIAMETER * 2));
+		Fighter fighterRed4 = new Fighter(teamRed, 510 - (Fighter.DIAMETER * 2), 490 - (Fighter.DIAMETER * 2));
+		Fighter fighterRed5 = new Fighter(teamRed, 520 - (Fighter.DIAMETER * 2), 480 - (Fighter.DIAMETER * 2));
 
 		teamRed.addFighter(fighterRed1);
 		teamRed.addFighter(fighterRed2);
@@ -105,8 +107,36 @@ public class Game {
 			team.doAction(round);
 		}
 		
-		for (Bullet bullet : listOfBullets) {
-			bullet.move();
+		for (int i = 0; i < 4; i++) {
+			List<Bullet> listOfBulletsToRemove = new ArrayList<Bullet>();
+			for (Bullet bullet : listOfBullets) {
+				bullet.move();
+				if (bullet.isOutOfArena()) {
+					listOfBulletsToRemove.add(bullet);
+				}
+			}
+			for (Bullet bullet : listOfBulletsToRemove) {
+				listOfBullets.remove(bullet);
+			}
+		}
+		
+		checkIfBulletsHitFighters();
+		
+	}
+	
+	private void checkIfBulletsHitFighters() {
+		for (Team team : listOfTeams) {
+			for (Fighter fighter : team.getListOfFighters()) {
+				for (Bullet bullet : listOfBullets) {
+					double diffX = Math.abs((fighter.getX() + Fighter.RADIUS) - (bullet.getX() + Bullet.RADIUS));
+					double diffY = Math.abs((fighter.getY() + Fighter.RADIUS) - (bullet.getY() + Bullet.RADIUS));
+					double diffTotal = Math.sqrt((diffX * diffX) + (diffY * diffY));
+					if (diffTotal < 7) {
+						fighter.die();
+						System.out.println();
+					}
+				}
+			}
 		}
 	}
 
