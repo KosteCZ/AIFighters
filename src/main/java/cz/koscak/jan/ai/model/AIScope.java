@@ -3,11 +3,13 @@ package cz.koscak.jan.ai.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.koscak.jan.core.Game;
 import cz.koscak.jan.core.Team;
 import cz.koscak.jan.model.Fighter;
 
 public class AIScope {
 
+	public static final int BULLET_SPEED = Game.BULLET_SPEED;
 	private List<AIFighter> myTeam = new ArrayList<AIFighter>();
 	private List<AIEnemy> enemyTeam = new ArrayList<AIEnemy>();
 	

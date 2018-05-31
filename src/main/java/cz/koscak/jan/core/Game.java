@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.koscak.jan.ai.Inteligence;
-import cz.koscak.jan.ai.RandomAI;
-import cz.koscak.jan.ai.StupidAI;
+import cz.koscak.jan.ai.PredictiveAI;
+import cz.koscak.jan.ai.RunAwayAI;
 import cz.koscak.jan.ai.model.AIScope;
 import cz.koscak.jan.ai.utils.AIActionPerformer;
 import cz.koscak.jan.model.Bullet;
@@ -16,6 +16,7 @@ import cz.koscak.jan.model.Fighter;
 
 public class Game {
 	
+	public static final int BULLET_SPEED = 4;
 	private List<Team> listOfTeams = new ArrayList<Team>();
 	private List<Bullet> listOfBullets = new ArrayList<Bullet>();
 
@@ -32,7 +33,10 @@ public class Game {
 		// Team BLUE
 		
 		//Inteligence inteligenceBlue = new DefaultAI();
-		Inteligence inteligenceBlue = new StupidAI();
+		//Inteligence inteligenceBlue = new StupidAI();
+		//Inteligence inteligenceBlue = new NoAI();
+		Inteligence inteligenceBlue = new RunAwayAI();
+		//Inteligence inteligenceBlue = new RunDownAI();
 		Team teamBlue = new Team(aIActionPerformer, Color.BLUE, inteligenceBlue);
 		listOfTeams.add(teamBlue);
 		
@@ -53,7 +57,9 @@ public class Game {
 
 		// Team RED
 		
-		Inteligence inteligenceRed = new RandomAI();
+		//Inteligence inteligenceRed = new RandomAI();
+		//Inteligence inteligenceRed = new NormalAI();
+		Inteligence inteligenceRed = new PredictiveAI();
 		Team teamRed = new Team(aIActionPerformer, Color.RED, inteligenceRed);
 		listOfTeams.add(teamRed);
 		
@@ -107,7 +113,7 @@ public class Game {
 			team.doAction(round);
 		}
 		
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < BULLET_SPEED; i++) {
 			List<Bullet> listOfBulletsToRemove = new ArrayList<Bullet>();
 			for (Bullet bullet : listOfBullets) {
 				bullet.move();

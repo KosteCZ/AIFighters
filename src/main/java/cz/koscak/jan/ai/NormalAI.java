@@ -9,7 +9,7 @@ import cz.koscak.jan.ai.model.AIScope;
 import cz.koscak.jan.model.Direction;
 
 public class NormalAI implements Inteligence {
-
+	
 	public void doAction(AIScope scope, int round) {
 		
 		if (round == 1) {
@@ -18,12 +18,6 @@ public class NormalAI implements Inteligence {
 			AIFighter fighter3 = scope.getMyTeam().get(2);
 			AIFighter fighter4 = scope.getMyTeam().get(3);
 			AIFighter fighter5 = scope.getMyTeam().get(4);
-			
-			fighter1.shootTo(new Direction(1, 1));
-			fighter2.shootTo(new Direction(1, 1));
-			fighter3.shootTo(new Direction(1, 1));
-			fighter4.shootTo(new Direction(1, 1));
-			fighter5.shootTo(new Direction(1, 1));
 
 			fighter1.moveInfinitelyInDirection(new Direction(-1, 1));			
 			fighter2.moveInfinitelyInDirection(new Direction(-1, 1));			
@@ -32,7 +26,7 @@ public class NormalAI implements Inteligence {
 			fighter5.moveInfinitelyInDirection(new Direction(1, -1));			
 		}
 		
-		if (round % 50 == 0) {
+		if (round == 1 || round % 50 == 0) {
 			
 			List<Direction> listOfTargets = new ArrayList<Direction>();
 			
@@ -54,14 +48,13 @@ public class NormalAI implements Inteligence {
 						listOfTargets.add(null);
 					}
 				}
-			}
-			
-			for (AIEnemy enemy : scope.getEnemyTeam()) {
-				enemy.isAlive();
-			}
+				for (int index = 0; index < scope.getMyTeam().size(); index++) {
+					scope.getMyTeam().get(index).shootTo(listOfTargets.get(index));
+				}
+			}			
 			
 			for (AIFighter fighter : scope.getMyTeam()) {
-				fighter.shootTo(new Direction((Math.random() * 2) - 1, (Math.random() * 2) - 1));
+				//				fighter.shootTo(new Direction((Math.random() * 2) - 1, (Math.random() * 2) - 1));
 				fighter.moveInfinitelyInDirection(new Direction(((int) (Math.random() * 3)) - 1, ((int) (Math.random() * 3)) - 1));			
 			}
 			
