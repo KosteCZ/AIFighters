@@ -82,10 +82,10 @@ public class PredictiveAI implements Inteligence {
 		public Direction getPredictedPosition(double x, double y) {
 			Position futureEnemyPosition = getFuturePositionForPosition(x, y);
 			
-			System.out.println("x, y:               " + x + ", " + y);
+			/*System.out.println("x, y:               " + x + ", " + y);
 			System.out.println("new_x, new_y:       " + x_new + ", " + y_new);
 			System.out.println("future_x, future_y: " + futureEnemyPosition.getX() + ", " + futureEnemyPosition.getY());
-			System.out.println("result_x, result_y: " + (futureEnemyPosition.getX() - x) + ", " + (futureEnemyPosition.getY() - y));
+			System.out.println("result_x, result_y: " + (futureEnemyPosition.getX() - x) + ", " + (futureEnemyPosition.getY() - y));*/
 			
 			return new Direction(futureEnemyPosition.getX() - x, futureEnemyPosition.getY() - y);
 		}
@@ -137,7 +137,7 @@ public class PredictiveAI implements Inteligence {
 					} else {
 						listOfTargets.add(null);
 					}
-					System.out.println("----------");
+					//System.out.println("----------");
 				}
 				for (int index = 0; index < scope.getMyTeam().size(); index++) {
 					scope.getMyTeam().get(index).shootTo(listOfTargets.get(index));
@@ -145,7 +145,7 @@ public class PredictiveAI implements Inteligence {
 			}			
 			
 			for (AIFighter fighter : scope.getMyTeam()) {
-				//				fighter.shootTo(new Direction((Math.random() * 2) - 1, (Math.random() * 2) - 1));
+				//fighter.shootTo(new Direction((Math.random() * 2) - 1, (Math.random() * 2) - 1));
 				fighter.moveInfinitelyInDirection(new Direction(((int) (Math.random() * 3)) - 1, ((int) (Math.random() * 3)) - 1));			
 			}
 			

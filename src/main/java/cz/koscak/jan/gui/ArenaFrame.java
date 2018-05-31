@@ -48,7 +48,7 @@ public class ArenaFrame extends JFrame {
 	    	
 	        super.paintComponent(g);       
 
-	        g.drawString("This is my custom Panel!", 10, 20);
+	        //g.drawString("This is my custom Panel!", 10, 20);
 			//g.drawOval(0, 0, 4, 4);
 	        
 	        paintArena(g);

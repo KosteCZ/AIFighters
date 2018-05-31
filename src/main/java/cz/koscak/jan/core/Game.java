@@ -7,11 +7,9 @@ import java.util.List;
 
 import cz.koscak.jan.ai.Inteligence;
 import cz.koscak.jan.ai.PredictiveAI;
-import cz.koscak.jan.ai.RunAwayAI;
 import cz.koscak.jan.ai.model.AIScope;
 import cz.koscak.jan.ai.utils.AIActionPerformer;
 import cz.koscak.jan.model.Bullet;
-import cz.koscak.jan.model.Direction;
 import cz.koscak.jan.model.Fighter;
 
 public class Game {
@@ -35,8 +33,10 @@ public class Game {
 		//Inteligence inteligenceBlue = new DefaultAI();
 		//Inteligence inteligenceBlue = new StupidAI();
 		//Inteligence inteligenceBlue = new NoAI();
-		Inteligence inteligenceBlue = new RunAwayAI();
+		//Inteligence inteligenceBlue = new RunAwayAI();
 		//Inteligence inteligenceBlue = new RunDownAI();
+		//Inteligence inteligenceBlue = new RunSlowlyDownAI();
+		Inteligence inteligenceBlue = new PredictiveAI();
 		Team teamBlue = new Team(aIActionPerformer, Color.BLUE, inteligenceBlue);
 		listOfTeams.add(teamBlue);
 		
@@ -52,9 +52,6 @@ public class Game {
 		teamBlue.addFighter(fighterBlue4);
 		teamBlue.addFighter(fighterBlue5);
 		
-		Bullet bullet1 = fighterBlue1.shoot(new Direction(1, 1));
-		listOfBullets.add(bullet1);
-
 		// Team RED
 		
 		//Inteligence inteligenceRed = new RandomAI();
@@ -74,9 +71,6 @@ public class Game {
 		teamRed.addFighter(fighterRed3);
 		teamRed.addFighter(fighterRed4);
 		teamRed.addFighter(fighterRed5);		
-		
-		Bullet bullet2 = fighterRed1.shoot(new Direction(-1, -1));
-		listOfBullets.add(bullet2);
 		
 		// Setting up scopes
 		
