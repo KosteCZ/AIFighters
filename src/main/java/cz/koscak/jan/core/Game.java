@@ -17,14 +17,25 @@ public class Game {
 	public static final int BULLET_SPEED = 4;
 	private List<Team> listOfTeams = new ArrayList<Team>();
 	private List<Bullet> listOfBullets = new ArrayList<Bullet>();
-
+	private boolean paused = true;
+	private boolean end = true;
+	private boolean beforeFirstGame = true;
+	
 	public Game() {
 		
 		initGame();
 		
 	}
 
-	private void initGame() {
+	public void startNewGame() {
+		
+		listOfTeams = new ArrayList<Team>();
+		listOfBullets = new ArrayList<Bullet>();
+		initGame();
+		
+	}
+		
+	public void initGame() {
 		
 		AIActionPerformer aIActionPerformer = new AIActionPerformer(this);
 		
@@ -81,6 +92,14 @@ public class Game {
 		
 	}
 	
+	public void setBeforeFirstGameToFalse() {
+		beforeFirstGame = false;
+	}
+	
+	public boolean isBeforeFirstGame() {
+		return beforeFirstGame;
+	}
+	
 	public List<Team> getListOfTeams() {
 		return listOfTeams;
 	}
@@ -98,7 +117,7 @@ public class Game {
 		for (Bullet bullet : listOfBullets) {
 			bullet.print(graphics);
 		}
-
+		
 	}
 
 	public void doActions(int round) {
@@ -122,6 +141,27 @@ public class Game {
 		
 		checkIfBulletsHitFighters();
 		
+		for (Team team : listOfTeams) {
+			
+			boolean doEnd = true;
+			
+			for (Fighter fighter : team.getListOfFighters()) {
+				
+				if (fighter.isAlive()) {
+					
+					doEnd = false;
+					
+				}
+			
+			}
+			
+			if (doEnd) {
+				end = true;
+				paused = true;
+			}
+			
+		}
+		
 	}
 	
 	private void checkIfBulletsHitFighters() {
@@ -133,11 +173,42 @@ public class Game {
 					double diffTotal = Math.sqrt((diffX * diffX) + (diffY * diffY));
 					if (diffTotal < 7) {
 						fighter.die();
-						System.out.println();
 					}
 				}
 			}
 		}
 	}
 
+	public boolean isPaused() {
+		return paused;
+	}
+
+	public void setPaused(boolean paused) {
+		this.paused = paused;
+	}
+	
+	
+	public boolean tooglePaused() {
+		paused = !paused;
+//		System.out.println("Toogle paused: " + paused);
+		return paused;
+	}
+
+	public void setEnd(boolean end) {
+		this.end = end;
+	}
+
+	public boolean isEnd() {
+		return end;
+	}
+	
+	public void setInteligenceForTeam(int index, Inteligence inteligence) {
+		if (index < listOfTeams.size()) {
+			Team team = listOfTeams.get(index);
+			if (!(team.getInteligence().getClass().getName().equals(inteligence.getClass().getName()))) {
+				team.setInteligence(inteligence);
+			}
+		}
+	}
+	
 }

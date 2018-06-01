@@ -55,5 +55,23 @@ public class Team {
 	public void setScope(AIScope aIScope) {
 		this.aIScope = aIScope;
 	}
+	
+	public int getPlayersAliveCount() {
+		int paluyersAliveCount = 0;
+		for (Fighter fighter : listOfFighters) {
+			if (fighter.isAlive()) {
+				paluyersAliveCount++;
+			}
+		}
+		return paluyersAliveCount;
+	}
+
+	public Inteligence getInteligence() {
+		return inteligence;
+	}
+
+	public void setInteligence(Inteligence inteligence) {
+		this.inteligence = inteligence;
+	}	
 
 }

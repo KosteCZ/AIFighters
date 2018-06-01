@@ -19,7 +19,13 @@ public class Main {
 		
 		while(true) {
 			
-			round++;
+			if (!game.isPaused()) {
+			
+				round++;
+				game.doActions(round);
+				arenaFrame.repaint();
+				
+			}
 			
 			try {
 				//System.out.println("Timer tick...");
@@ -28,10 +34,7 @@ public class Main {
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			
-			game.doActions(round);
-			arenaFrame.repaint();
+			}			
 			
 		}		
 
